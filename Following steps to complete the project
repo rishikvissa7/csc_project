@@ -1,0 +1,68 @@
+Step1: Create an AWS account and login into it
+Step2: Select any region of your wish
+Step3: Go to dashboard & search for kinesis and create a datastream using default settings
+
+see png file 1 for reference
+
+within less than a min it will get created
+
+see png file 2 for reference
+
+Step4: After creation of datastream , now we have to go to lambda dashboard to complete furthur steps
+Step5: Now we have to create 2 lambda functions :
+1) kinesis_datastream_producer
+2) kinesis_datastream_consumer
+These 2 functions are used for pushing messages from datafile to datastream and return by triggering the lambda function
+
+see png file 3 for reference
+
+while creation of lambda function i gave an existing role kinesis_datastream_role
+this role contains full access to cloudwatch,dynamodb and kinesis
+
+Step 6: In the code section add the following code
+
+see png file 4 for reference
+
+Step 7: create a source.json file and fill the details as [{"id":"1", "name":"Rishik", "age":"20"}] and save
+After adding click on deploy and test with default settings.
+Step 8: Creation of kinesis_datastream_consumer lambda function, After creation with default settings click on add trigger and select kinesis and select kinesis 
+datastream name which we created earlier and click on add
+
+see png file 5 for refernce
+
+Step 9: Add the following code in the function
+
+see png file 6 for refernce
+
+In the above code we are giving dynamodb table name so we are going to create a dynamodb table so that the data in source file will be sent to the table
+Step 10: Go to dynamodb dashboard , click on create table , give name as Kinesis_datastream_customer_demo and partition key as id and leave other options as 
+default and click create
+
+see png file 7 for refernce
+
+Step 11: Now go back to producer function and click on test and now go to cloud watch and check consumer cloud watch logs groups
+
+see png file 8 for reference
+
+In the above image we can see the data in source file is in the format of bytes
+The consumer function helps to decode the data and retrieve the data in understandable format
+
+see png file 9 for reference
+
+Step 12: Now get back to the dynamodb table to check whether the details are sent to the dynamodb table
+Step 13: after going to table click on explore table items
+
+see png file 10 for reference
+
+In the above image we can see that the items in source file are triggered by lambda and sent into the table
+First the data is stored in producer lambda and when we test the data is sent to kinesis data stream and then it is retrieved or return by the help of consumer lambda
+In the above article I shown you how to push messages to kinesis datastream and trigger a lambda function and how to load data into dynamodb table using simple 
+aws services kinesis , lambda , dynamodb, cloudwatch , IAM etc
+
+Conclusion:
+Serverless stream processing offers numerous advantages over traditional approaches to stream processing. By leveraging the scalability and flexibility of 
+serverless computing, organizations can process and analyze data in real-time without the need for dedicated servers or infrastructure. This not only reduces 
+costs but also simplifies the development and deployment of stream processing applications. Moreover, serverless stream processing enables organizations to react
+quickly to changing data processing needs and to scale their processing resources up or down as needed. As such, it is an ideal solution for modern data-driven
+organizations that require fast, agile, and cost-effective stream processing capabilities. With the continued growth and adoption of cloud technologies, we can
+expect to see an increasing number of organizations embracing serverless stream processing as a key component of their data processing strategies.
